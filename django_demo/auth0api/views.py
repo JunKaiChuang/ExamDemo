@@ -42,10 +42,10 @@ def re_set_password(request):
 
     is_old_pass_correct = helper.isOldPasswordCorrect(user_name=user_name, password=old_password)
     if not is_old_pass_correct:
-        return JsonResponse('Your old password not correct!', safe=False)
+        return JsonResponse('Your old password not correct!', safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     else:
         res = helper.reSetPassword(uid=uid, password=password)
         if res is not None:
-            return JsonResponse(res, safe=False)
+            return JsonResponse(res, safe=False, status=status.HTTP_200_OK)
         else:
-            return JsonResponse('Service fail!', safe=False)
+            return JsonResponse('Service fail!', safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

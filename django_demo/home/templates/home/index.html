@@ -34,9 +34,9 @@
 
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     <script src="https://cdn.auth0.com/js/auth0-spa-js/1.20/auth0-spa-js.production.js"></script>
+    <script type="text/JavaScript" src="{% static 'script/ui.js' %}"></script>
     <script type="text/JavaScript" src="{% static 'script/auth0-client.js' %}"></script>
     <script type="text/JavaScript" src="{% static 'script/auth0-func.js' %}"></script>
-    <script type="text/JavaScript" src="{% static 'script/ui.js' %}"></script>
     <script type="text/JavaScript" src="{% static 'script/password-valid.js' %}"></script>
     <script type="text/JavaScript" src="{% static 'script/data-grid.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -204,6 +204,10 @@
               <div class="col-md">
                   <input id="inputName" type='text' class="user-name" style="font-size: 25px;"/>
                   <button id="saveNameBtn" onclick="updateName()" class="btn btn-primary btn-margin ">Save</button>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary  hidden is-social-invisible" data-toggle="modal" data-target="#myModal" >
+                    Reset Password
+                  </button>
                   <p class="lead text-muted user-email"></p>
               </div>
             </div>
@@ -237,31 +241,49 @@
             <br>
             <br>
           </div>
-          <form id="password-reset" onsubmit="reSetPass()" class="text-center hidden is-social-invisible">
-              <label>Old password</label><input id="old-pass" type="password" required ><i class="bi bi-eye-slash" id="togglePassword-old"></i><br>
-              <label>New password</label><input id="new-pass" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!\&quot;#\$%&amp;'\(\)\*\+,-\./:;&lt;=&gt;\?@\[\\\]\^_`{\|}~])(?=.*[A-Z]).{8,}(?=.*)"
-                                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required ><i class="bi bi-eye-slash" id="togglePassword-new"></i><br>
-              <label>Re-Enter new password</label><input id="re-new-pass" type="password" required ><i class="bi bi-eye-slash" id="togglePassword-re-new"></i><br>
-              <div id="message">
-                <h3>Password must contain the following:</h3>
-                <p id="lower" class="invalid">contains at least one <b>lower</b> character</p>
-                <p id="upper" class="invalid">contains at least one <b>upper</b> character</p>
-                <p id="digit" class="invalid">contains at least one <b>digit</b> character</p>
-                <p id="special" class="invalid">contains at least one <b>special</b> character</p>
-                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-              </div>
-            <input
-                    type="submit"
-                    id="reSetPassBtn"
-                    value="Reset Password"
-                    class="btn btn-primary btn-margin"
-                    >
 
-            </input>
-            <div class="hidden wait-visible">
-              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="myModalLabel">Reset Password</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearResetPassword()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="password-reset" onsubmit="reSetPass()" class="text-center">
+                        <label>Old password</label><input id="old-pass" type="password" class="group-reset-password" required ><i class="bi bi-eye-slash" id="togglePassword-old"></i><br>
+                        <label>New password</label><input id="new-pass" type="password" class="group-reset-password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!\&quot;#\$%&amp;'\(\)\*\+,-\./:;&lt;=&gt;\?@\[\\\]\^_`{\|}~])(?=.*[A-Z]).{8,}(?=.*)"
+                                                          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required ><i class="bi bi-eye-slash" id="togglePassword-new"></i><br>
+                        <label>Re-Enter new password</label><input id="re-new-pass" type="password" class="group-reset-password" required ><i class="bi bi-eye-slash" id="togglePassword-re-new"></i><br>
+                        <div id="message">
+                          <h3>Password must contain the following:</h3>
+                          <p id="lower" class="invalid">contains at least one <b>lower</b> character</p>
+                          <p id="upper" class="invalid">contains at least one <b>upper</b> character</p>
+                          <p id="digit" class="invalid">contains at least one <b>digit</b> character</p>
+                          <p id="special" class="invalid">contains at least one <b>special</b> character</p>
+                          <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                        </div>
+                        <input  type="submit"
+                                id="reSetPassBtn"
+                                value="Reset Password"
+                                class="btn btn-primary btn-margin"
+                                >
+
+                        </input>
+                    <div class="hidden wait-visible">
+                      <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearResetPassword()">Close</button>
+                </div>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
 

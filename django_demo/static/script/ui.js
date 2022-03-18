@@ -140,6 +140,11 @@ const setDashboardInfo = (info) => {
     eachElement(".dashboard-info", (e) => (e.innerHTML = defaultStr + info));
 }
 
+const clearResetPassword = () => {
+    //group-reset-password
+    eachElement(".group-reset-password", (e) => (e.value = ""));
+}
+
 window.onpopstate = (e) => {
   if (e.state && e.state.url && router[e.state.url]) {
     showContentFromUrl(e.state.url);

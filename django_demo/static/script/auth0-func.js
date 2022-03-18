@@ -221,12 +221,10 @@ const reSetPass = async() => {
   })
   .then(response => {
     if (response.ok) {
-      return response.json()
-    } else if(response.status === 404) {
-      return Promise.reject('error 404')
-    } else {
-      return Promise.reject('some other error: ' + response.status)
+      $('#myModal').modal('hide')
+      clearResetPassword();
     }
+    return response.json();
   });
 
   alert(result);
