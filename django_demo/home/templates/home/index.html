@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Landing Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/my-style.css' %}">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css"
+      integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css"
+      integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.20/auth0-spa-js.production.js"></script>
+    <script type="text/JavaScript" src="{% static 'script/auth0-client.js' %}"></script>
+    <script type="text/JavaScript" src="{% static 'script/auth0-func.js' %}"></script>
+    <script type="text/JavaScript" src="{% static 'script/ui.js' %}"></script>
+    <script type="text/JavaScript" src="{% static 'script/password-valid.js' %}"></script>
+    <script type="text/JavaScript" src="{% static 'script/data-grid.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+
+</head>
+ <body class="h-100">
+    <div id="app" class="h-100 d-flex flex-column">
+      <div class="nav-container">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+          <div class="container">
+            <div class="navbar-brand logo"></div>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+<!--                  <a href="/home" class="nav-link route-link">Home</a>-->
+                </li>
+              </ul>
+              <ul class="navbar-nav d-none d-md-block">
+                <!-- Login button: show if NOT authenticated -->
+                <li class="nav-item auth-invisible">
+                  <button
+                    id="qsLoginBtn"
+                    onclick="login()"
+                    disabled
+                    class="btn btn-primary btn-margin auth-invisible hidden"
+                  >
+                    Log in
+                  </button>
+                </li>
+                <!-- / Login button -->
+
+                <!-- Fullsize dropdown: show if authenticated -->
+                <li class="nav-item dropdown auth-visible hidden">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="profileDropDown"
+                    data-toggle="dropdown"
+                  >
+                    <!-- Profile images should be set to the profile picture from the id token -->
+                    <img
+                      alt="Profile picture"
+                      class="nav-user-profile profile-image rounded-circle"
+                      width="50"
+                    />
+                  </a>
+                  <div class="dropdown-menu">
+                    <!-- Show the user's full name from the id token here -->
+                    <div class="dropdown-header nav-user-name user-name"></div>
+                    <!--<a
+                      href="/profile"
+                      class="dropdown-item dropdown-profile route-link"
+                    >
+                      <i class="fas fa-user mr-3"></i> Profile </a>-->
+                    <a
+                      href="#"
+                      class="dropdown-item"
+                      id="qsLogoutBtn"
+                      onclick="logout()"
+                    >
+                      <i class="fas fa-power-off mr-3"></i> Log out
+                    </a>
+                  </div>
+                </li>
+                <!-- /Fullsize dropdown -->
+              </ul>
+
+              <!-- Responsive login button: show if NOT authenticated -->
+              <ul class="navbar-nav d-md-none auth-invisible">
+                <button
+                  class="btn btn-primary btn-block auth-invisible hidden"
+                  id="qsLoginBtn"
+                  disabled
+                  onclick="login()"
+                >
+                  Log in
+                </button>
+              </ul>
+              <!-- /Responsive login button -->
+
+              <!-- Responsive profile dropdown: show if authenticated -->
+              <ul
+                class="
+                  navbar-nav
+                  d-md-none
+                  auth-visible
+                  hidden
+                  justify-content-between
+                "
+                style="min-height: 125px"
+              >
+                <li class="nav-item">
+                  <span class="user-info">
+                    <!-- Profile images should be set to the profile picture from the id token -->
+                    <img
+                      alt="Profile picture"
+                      class="
+                        nav-user-profile
+                        d-inline-block
+                        profile-image
+                        rounded-circle
+                        mr-3
+                      "
+                      width="50"
+                    />
+                    <!-- Show the user's full name from the id token here -->
+                    <h6 class="d-inline-block nav-user-name user-name"></h6>
+                  </span>
+                </li>
+                <li>
+                  <i class="fas fa-user mr-3"></i>
+                  <a href="/profile" class="route-link">Profile</a>
+                </li>
+
+                <li>
+                  <i class="fas fa-power-off mr-3"></i>
+                  <a href="#" id="qsLogoutBtn" onclick="logout()">Log out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div id="main-content" class="container mt-5 flex-grow-1">
+        <div id="content-home" class="page">
+          <div id="start-home" class="text-center hero au auth-invisible hidden">
+            <img
+              class="mb-3 app-logo"
+              src="/static/images/logo.png"
+              alt="JavaScript logo"
+              width="75"
+            />
+            <h1 class="mb-4">JavaScript Sample Project</h1>
+
+            <p class="lead">
+              This is a sample application that demonstrates an authentication
+              flow for an SPA, using plain JavaScript
+            </p>
+          </div>
+          <div class="page auth-visible hidden" id="content-profile">
+          <div class="container">
+            <div class="row align-items-center profile-header">
+              <div class="col-md-2">
+                <img
+                  alt="User's profile picture"
+                  class="rounded-circle img-fluid profile-image mb-3 mb-md-0"
+                />
+              </div>
+              <div class="col-md">
+                  <input id="inputName" type='text' class="user-name" style="font-size: 25px;"/>
+                  <button id="saveNameBtn" onclick="updateName()" class="btn btn-primary btn-margin ">Save</button>
+                  <p class="lead text-muted user-email"></p>
+              </div>
+            </div>
+
+            <div class="row">
+              <pre class="rounded hidden">
+                <code id="profile-data" class="json"></code></pre>
+            </div>
+          </div>
+        </div>
+          <div id="email-verify" class="text-center hidden mail-verified-invisible">
+            <p class="lead">
+              Your email not verified . Please check your email or click below button to resend email.
+            </p>
+            <button
+                    id="reSendMailBtn"
+                    onclick="reSendMail();this.disabled = true;"
+                    class="btn btn-primary btn-margin">
+                    Resend Email Verification
+            </button>
+            <br>
+            <br>
+            <br>
+          </div>
+          <div id="dashboard" class="text-center hidden mail-verified-visible">
+            <p class="lead dashboard-info">
+              This is dashboard.
+            </p>
+            <div id="myGrid" style="height: 200px; width:100%;" class="ag-theme-alpine"></div>
+            <br>
+            <br>
+            <br>
+          </div>
+          <form id="password-reset" onsubmit="reSetPass()" class="text-center hidden is-social-invisible">
+              <label>Old password</label><input id="old-pass" type="password" required ><i class="bi bi-eye-slash" id="togglePassword-old"></i><br>
+              <label>New password</label><input id="new-pass" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!\&quot;#\$%&amp;'\(\)\*\+,-\./:;&lt;=&gt;\?@\[\\\]\^_`{\|}~])(?=.*[A-Z]).{8,}(?=.*)"
+                                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required ><i class="bi bi-eye-slash" id="togglePassword-new"></i><br>
+              <label>Re-Enter new password</label><input id="re-new-pass" type="password" required ><i class="bi bi-eye-slash" id="togglePassword-re-new"></i><br>
+              <div id="message">
+                <h3>Password must contain the following:</h3>
+                <p id="lower" class="invalid">contains at least one <b>lower</b> character</p>
+                <p id="upper" class="invalid">contains at least one <b>upper</b> character</p>
+                <p id="digit" class="invalid">contains at least one <b>digit</b> character</p>
+                <p id="special" class="invalid">contains at least one <b>special</b> character</p>
+                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+              </div>
+            <input
+                    type="submit"
+                    id="reSetPassBtn"
+                    value="Reset Password"
+                    class="btn btn-primary btn-margin"
+                    >
+
+            </input>
+            <div class="hidden wait-visible">
+              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <footer class="bg-light text-center p-5">
+        <div class="logo"></div>
+        <p>
+          Original sample project provided by
+          <a href="https://auth0.com">Auth0</a>
+        </p>
+      </footer>
+    </div>
+
+  </body></html>
