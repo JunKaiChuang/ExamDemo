@@ -1,6 +1,8 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from drf_yasg.utils import swagger_auto_schema
 from requests import Response
+from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework import viewsets
@@ -17,7 +19,14 @@ class MemberViewSet(viewsets.ModelViewSet):
     serializer_class = MemberSerializer
 
 
+@swagger_auto_schema(
+    methods=['get'],
+    operation_summary='Get dashboard data.'
+)
+@api_view(['GET'])
 def get_dashboard_data(request):
+    """Get dashboard data."""
+
     members = list(Member.objects.all().values())
     members_info = get_members_info()
     result = [
