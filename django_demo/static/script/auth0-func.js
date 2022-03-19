@@ -90,6 +90,10 @@ const GetUserDetail = async (id) => {
     .then(member =>{
         if (!member) {
             console.log('Member not exists, POST data.')
+            eachElement(".user-name", (e) => {
+                      e.value = data.name;
+                      e.innerText = data.name;
+                    });
             Membership_REST(model, 'POST', uid);
         }
         else{
