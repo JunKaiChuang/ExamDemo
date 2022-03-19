@@ -204,10 +204,12 @@
               <div class="col-md">
                   <input id="inputName" type='text' class="user-name" style="font-size: 25px;"/>
                   <button id="saveNameBtn" onclick="updateName()" class="btn btn-primary btn-margin ">Save</button>
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary  hidden is-social-invisible" data-toggle="modal" data-target="#myModal" >
-                    Reset Password
-                  </button>
+                  <div class="hidden is-social-invisible">
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" >
+                        Reset Password
+                      </button>
+                  </div>
                   <p class="lead text-muted user-email"></p>
               </div>
             </div>
