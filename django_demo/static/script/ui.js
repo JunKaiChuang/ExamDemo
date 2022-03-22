@@ -69,6 +69,19 @@ const updateUI = async () => {
         2
       );
 
+
+
+      document.querySelectorAll("pre code").forEach(hljs.highlightBlock);
+
+      eachElement(".profile-image", (e) => (e.src = user.picture));
+      eachElement(".user-email", (e) => (e.innerText = user.email));
+      eachElement(".auth-invisible", (e) => e.classList.add("hidden"));
+      eachElement(".auth-visible", (e) => e.classList.remove("hidden"));
+
+      document.getElementById("qsLoginBtn").setAttribute('disabled', '');
+
+      const userDetail = await GetUserDetail(user.sub);
+
       const isMailVerified = user.email_verified;
 
       if(isMailVerified){
@@ -82,16 +95,6 @@ const updateUI = async () => {
         eachElement(".mail-verified-visible", (e) => e.classList.add("hidden"));
       }
 
-      document.querySelectorAll("pre code").forEach(hljs.highlightBlock);
-
-      eachElement(".profile-image", (e) => (e.src = user.picture));
-      eachElement(".user-email", (e) => (e.innerText = user.email));
-      eachElement(".auth-invisible", (e) => e.classList.add("hidden"));
-      eachElement(".auth-visible", (e) => e.classList.remove("hidden"));
-
-      document.getElementById("qsLoginBtn").setAttribute('disabled', '');
-
-      const userDetail = await GetUserDetail(user.sub);
       var isSocial = userDetail.identities[0].isSocial
 
       if(isSocial){

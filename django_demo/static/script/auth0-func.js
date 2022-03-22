@@ -5,7 +5,8 @@ const GenMemberModel = (source) => {
         name : source.name,
         loginsCount : source.logins_count,
         lastLogin : source.last_login,
-        created : source.created_at
+        created : source.created_at,
+        lastSession : new Date().toISOString()
     });
 }
 
@@ -86,15 +87,15 @@ const GetUserDetail = async (id) => {
     console.log('auth0 user data is', data);
     const uid = data.user_id;
     const model = GenMemberModel(data);
-    Membership_REST(model, 'GET', uid)
-    .then(member =>{
+    await Membership_REST(model, 'GET', uid)
+    .then(async member =>{
         if (!member) {
             console.log('Member not exists, POST data.')
             eachElement(".user-name", (e) => {
                       e.value = data.name;
                       e.innerText = data.name;
                     });
-            Membership_REST(model, 'POST', uid);
+             await Membership_REST(model, 'POST', uid);
         }
         else{
             console.log('Member exists, PUT data.')
@@ -103,7 +104,7 @@ const GetUserDetail = async (id) => {
             member.lastLogin = model.lastLogin;
             member.loginsCount = model.loginsCount;
             member.lastSession = new Date().toISOString();
-            Membership_REST(member, 'PUT', uid)
+            await Membership_REST(member, 'PUT', uid)
             .then(res => {
                 if(res){
                     eachElement(".user-name", (e) => {
